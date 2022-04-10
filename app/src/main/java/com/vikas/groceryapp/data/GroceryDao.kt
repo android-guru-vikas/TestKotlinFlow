@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.Flow
 /**
  * The Data Access Object for the [Record] class.
  */
-interface GardenPlantingDao {
+interface GroceryDao {
 
-    fun getPlantedGardens(): Flow<List<Record>>
+    fun getGroceryItems(): Flow<List<Record>>
 }

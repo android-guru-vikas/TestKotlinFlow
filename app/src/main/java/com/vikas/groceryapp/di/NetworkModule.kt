@@ -16,55 +16,20 @@
 
 package com.vikas.groceryapp.di
 
-import com.vikas.groceryapp.api.UnsplashService
+import com.vikas.groceryapp.api.APIService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
 object NetworkModule {
-    private const val BASE_URL = "https://api.data.gov.in/"
 
     @Singleton
     @Provides
-    fun provideHttpClient(): OkHttpClient {
-        val logger = HttpLoggingInterceptor()
-        logger.level = HttpLoggingInterceptor.Level.BODY
-        return OkHttpClient
-            .Builder()
-            .addInterceptor(logger)
-            .readTimeout(15, TimeUnit.SECONDS)
-            .connectTimeout(15, TimeUnit.SECONDS)
-            .build()
+    fun provideGroceryService(): APIService {
+        return APIService.create()
     }
-
-    @Singleton
-    @Provides
-    fun provideConverterFactory(): GsonConverterFactory = GsonConverterFactory.create()
-
-    @Singleton
-    @Provides
-    fun provideRetrofit(
-        okHttpClient: OkHttpClient,
-        gsonConverterFactory: GsonConverterFactory
-    ): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(okHttpClient)
-            .addConverterFactory(gsonConverterFactory)
-            .build()
-    }
-
-    @Singleton
-    @Provides
-    fun provideCurrencyService(retrofit: Retrofit): UnsplashService =
-        retrofit.create(UnsplashService::class.java)
 }

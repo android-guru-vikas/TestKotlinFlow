@@ -25,11 +25,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vikas.groceryapp.data.Record
 import com.vikas.groceryapp.databinding.LayoutGroceryItemsBinding
 
-class GardenPlantingAdapter :
-    PagingDataAdapter<Record, GardenPlantingAdapter.GalleryViewHolder>(GardenPlantDiffCallback()) {
+class GroceryListAdapter : PagingDataAdapter<Record, GroceryListAdapter.GroceryViewHolder>(GroceryDiffCallBack()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryViewHolder {
-        return GalleryViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroceryViewHolder {
+        Log.d("TAG", "Inside onCreateViewHolder ")
+        return GroceryViewHolder(
             LayoutGroceryItemsBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -38,7 +38,7 @@ class GardenPlantingAdapter :
         )
     }
 
-    override fun onBindViewHolder(holder: GalleryViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: GroceryViewHolder, position: Int) {
         Log.d("TAG", "Inside onBindViewHolder : $position")
         val photo = getItem(position)
         if (photo != null) {
@@ -46,7 +46,7 @@ class GardenPlantingAdapter :
         }
     }
 
-    class GalleryViewHolder(
+    class GroceryViewHolder(
         private val binding: LayoutGroceryItemsBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -61,7 +61,7 @@ class GardenPlantingAdapter :
     }
 }
 
-private class GardenPlantDiffCallback : DiffUtil.ItemCallback<Record>() {
+private class GroceryDiffCallBack : DiffUtil.ItemCallback<Record>() {
 
     override fun areItemsTheSame(
         oldItem: Record,

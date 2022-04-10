@@ -35,8 +35,10 @@
             android:id="@+id/groceryItemsRv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
+            android:clipToPadding="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:context="com.vikas.groceryapp.MainActivity"
+            tools:listitem="@layout/layout_grocery_items"/>
         <ProgressBar
             android:id="@+id/pbDog"
             android:layout_width="100dp"

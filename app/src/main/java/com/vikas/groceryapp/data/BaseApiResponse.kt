@@ -1,4 +1,4 @@
-package com.maxi.dogapi.model
+package com.vikas.groceryapp.data
 
 import com.vikas.groceryapp.utilities.NetworkResult
 import retrofit2.Response

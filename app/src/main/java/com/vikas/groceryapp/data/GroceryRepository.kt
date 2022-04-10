@@ -16,22 +16,28 @@
 
 package com.vikas.groceryapp.data
 
-import com.maxi.dogapi.model.BaseApiResponse
-import com.vikas.groceryapp.utilities.NetworkResult
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import com.vikas.groceryapp.api.APIService
 import dagger.hilt.android.scopes.ActivityRetainedScoped
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-@ActivityRetainedScoped
-class GardenPlantingRepository @Inject constructor(private val remoteDataSource: UnsplashPagingSource) :
-    BaseApiResponse() {
+class GroceryRepository @Inject constructor(private val service: APIService) {
 
-    suspend fun getDog(): Flow<NetworkResult<GroceryModelResponse>> {
-        return flow<NetworkResult<GroceryModelResponse>> {
-            emit(safeApiCall { remoteDataSource.getDog() })
-        }.flowOn(Dispatchers.IO)
+    fun getGroceryItems(query: String): Flow<PagingData<Record>> {
+//        return Pager(PagingConfig(pageSize = 20)) {
+//            GroceryPagingSource(service, query)
+//        }.flow
+
+        return Pager(
+            config = PagingConfig(enablePlaceholders = true, pageSize = NETWORK_PAGE_SIZE),
+            pagingSourceFactory = { GroceryPagingSource(service, query) }
+        ).flow
+    }
+
+    companion object {
+        private const val NETWORK_PAGE_SIZE = 3
     }
 }
